@@ -1,310 +1,311 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html;  charset=utf-8">
-  <title>Hamburger nomnom!!</title>
-  <link rel="shortcut icon" href="image/nomnom_favicon.ico" type="image/vnd.microsoft.icon">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="css/nomnom.css">
-  <script src="js/processing.min.js"></script>
-  <script src="js/nomnom.js"></script>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-</head>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;  charset=utf-8" />
+		<title>Hamburger nomnom!!</title>
+		<link
+			rel="shortcut icon"
+			href="image/nomnom_favicon.ico"
+			type="image/vnd.microsoft.icon"
+		/>
+		<meta
+			name="viewport"
+			content="width=device-width, user-scalable=no, initial-scale=1"
+		/>
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</head>
 
-<body>
+	<body>
+		<div>
+			<script type="application/processing" class="canvas">
 
-<div>
-  <script type="application/processing" class="canvas">
+				/*---------------------------------------------------------
+				WEBで表示したいProcessingのプログラムはこの位置に記述する
+				---------------------------------------------------------*/
 
-  /*---------------------------------------------------------
-  WEBで表示したいProcessingのプログラムはこの位置に記述する
-  ---------------------------------------------------------*/
-
-  //  Processingのプログラム
-
-
-  float [] x = {30,30,30,30,30,30};
-  float [] y = {30,30,30,30,30,30};
-  float [] dx ={5,7,10,13,16,20};
-  float dy = 10 ;
-  int sw = 0 ;//スイッチ 0で横動き停止,1で横うごく,2で落下
-  int t = 0;
-  PImage img_bun_top;
-  PImage img_lettuce;
-  PImage img_cheese;
-  PImage img_tomato;
-  PImage img_beef;
-  PImage img_bun_bottom;
-  PImage img_bg;
-  PImage img_reset;
-  PImage img_start;
-  PImage img_ending;
-  width = innerWidth;
-  height = innerHeight;
-
-  void setup(){
-    size(width,height);
-    smooth();
-    frameRate(30);
-    img_bun_top = loadImage("image/burger6.png");
-    img_lettuce = loadImage("image/burger5.png");
-    img_cheese = loadImage("image/burger4.png");
-    img_tomato = loadImage("image/burger3.png");
-    img_beef = loadImage("image/burger2.png");
-    img_bun_bottom = loadImage("image/burger1.png");
-    img_bg = loadImage("image/bg.png");
-    img_reset = loadImage("image/reset.png");
-    img_start = loadImage("image/start.png");
-    img_ending = loadImage("image/ending.png");
-  }
-
-  void draw(){
-    background(#143265);
-    image(img_bg,width/2,height/3,width*1400/1920,width*640/1920);
-    image(img_reset,40,40);
-    stroke(5);
-    fill(255,0,0);
-    imageMode(CENTER);
-    
-    if(sw==0){
-      image(img_start,width/2,height*2/3,width*1400/1920,width*280/1920);
-    }
-    
-    if(sw==1){//バンズ下横移動
-      image(img_bun_bottom,x[0],y[0]);
-      x[0] += dx[0];
-      if(width-35<x[0] || x[0]<35){
-        dx[0] *= -1;
-      }
-      
-    }
-    
-    else if(sw==2){//バンズ下落下
-      image(img_bun_bottom,x[0],y[0]);
-      if(y[0]<height-121){
-        y[0] += 14;
-      }
-      if(height-121<=y[0]){
-        sw = 3;
-      }
-    }
-    
-    else if(sw==3){//肉横移動
-      image(img_bun_bottom,x[0],y[0]);
-      image(img_beef,x[1],y[1]);
-      x[1] += dx[1];
-      if(width-35<x[1] || x[1]<35){
-        dx[1] *= -1;
-      }
-    }
-    
-    else if(sw==4){//肉落下
-      image(img_bun_bottom,x[0],y[0]);
-      image(img_beef,x[1],y[1]);
-      if(y[1] < y[0]-14){
-        y[1] += 14;
-      }
-      if(y[0]-14 <= y[1]){
-        y[1] = y[0]-11;
-        sw = 5;
-      }
-    }
-    
-    else if(sw==5){//トマト横移動
-      image(img_bun_bottom,x[0],y[0]);
-      image(img_beef,x[1],y[1]);
-      image(img_tomato,x[2],y[2]);
-      x[2] += dx[2];
-      if(width-35<x[2] || x[2]<35){
-        dx[2] *= -1;
-      }
-    }
-    
-    else if(sw==6){//トマト落下
-      image(img_bun_bottom,x[0],y[0]);
-      image(img_beef,x[1],y[1]);
-      image(img_tomato,x[2],y[2]);
-      if(y[2]<y[1]-14){
-        y[2] += 14;
-      }
-      if(y[1]-14<=y[2]){
-        y[2] = y[1]-11;
-        sw = 7;
-      }
-    }
-    
-    else if(sw==7){//チーズ横移動
-      image(img_bun_bottom,x[0],y[0]);
-      image(img_beef,x[1],y[1]);
-      image(img_tomato,x[2],y[2]);
-      image(img_cheese,x[3],y[3]);
-      x[3] += dx[3];
-      if(width-35<x[3] || x[3]<35){
-        dx[3] *= -1;
-      }
-    }
-    
-    else if(sw==8){//チーズ落下
-      image(img_bun_bottom,x[0],y[0]);
-      image(img_beef,x[1],y[1]);
-      image(img_tomato,x[2],y[2]);
-      image(img_cheese,x[3],y[3]);
-      if(y[3]<y[2]-14){
-        y[3] += 14;
-      }
-      if(y[2]-14<=y[3]){
-        y[3] = y[2]-6;
-        sw = 9;
-      }
-    }
-    
-    else if(sw==9){//レタス横移動
-      image(img_bun_bottom,x[0],y[0]);
-      image(img_beef,x[1],y[1]);
-      image(img_tomato,x[2],y[2]);
-      image(img_cheese,x[3],y[3]);
-      image(img_lettuce,x[4],y[4]);
-      x[4] += dx[4];
-      if(width-35<x[4] || x[4]<35){
-        dx[4] *= -1;
-      }
-    }
-    
-    else if(sw==10){//レタス落下
-      image(img_bun_bottom,x[0],y[0]);
-      image(img_beef,x[1],y[1]);
-      image(img_tomato,x[2],y[2]);
-      image(img_cheese,x[3],y[3]);
-      image(img_lettuce,x[4],y[4]);
-      if(y[4]<y[3]-14){
-        y[4] += 14;
-      }
-      if(y[3]-14<=y[4]){
-        y[4] = y[3]-6;
-        sw = 11;
-      }
-    }
-    
-    else if(sw==11){//バンズ上横移動
-      image(img_bun_bottom,x[0],y[0]);
-      image(img_beef,x[1],y[1]);
-      image(img_tomato,x[2],y[2]);
-      image(img_cheese,x[3],y[3]);
-      image(img_lettuce,x[4],y[4]);
-      image(img_bun_top,x[5],y[5]);
-      x[5] += dx[5];
-      if(width-35<x[5] || x[5]<35){
-        dx[5] *= -1;
-      }
-    }
-    
-    else if(sw==12){//バンズ上落下
-      image(img_bun_bottom,x[0],y[0]);
-      image(img_beef,x[1],y[1]);
-      image(img_tomato,x[2],y[2]);
-      image(img_cheese,x[3],y[3]);
-      image(img_lettuce,x[4],y[4]);
-      image(img_bun_top,x[5],y[5]);
-      if(y[5]<y[4]-14){
-        y[5] += 14;
-      }
-      else if(y[4]-14<=y[5]){
-        y[5] = y[4]-14;
-        sw = 13;
-      }
-    }
-    
-    else if(sw==13){
-      image(img_bun_bottom,x[0],y[0]);
-      image(img_beef,x[1],y[1]);
-      image(img_tomato,x[2],y[2]);
-      image(img_cheese,x[3],y[3]);
-      image(img_lettuce,x[4],y[4]);
-      image(img_bun_top,x[5],y[5]);
-      t++;
-      if(30<=t){
-        image(img_ending,width/2,height*2/3,width*1400/1920,width*240/1920);
-      }
-    }
-    
-  }
-
-  void mousePressed(){
-    if(sw==0){
-      sw = 1;
-    }
-    else if(sw==1){
-      sw = 2;
-    }
-    else if(sw==3){
-      sw = 4;
-    }
-    else if(sw==5){
-      sw = 6;
-    }
-    else if(sw==7){
-      sw = 8;
-    }
-    else if(sw==9){
-      sw = 10;
-    }
-    else if(sw==11){
-      sw = 12;
-    }
-    
-    if(mouseX<80 && mouseY<80){
-      reset();
-    }
-  }
-
-  /*
-  void keyPressed(){
-    if(key == ' '){
-      if(sw==0){
-      sw = 1;
-      }
-      else if(sw==1){
-        sw = 2;
-      }
-      else if(sw==3){
-        sw = 4;
-      }
-      else if(sw==5){
-        sw = 6;
-      }
-      else if(sw==7){
-        sw = 8;
-      }
-      else if(sw==9){
-        sw = 10;
-      }
-      else if(sw==11){
-        sw = 12;
-      }
-    }
-    else if(key == 'r'){
-      reset();
-    }
-  }
-  */
-
-  void reset(){
-    sw = 0;
-    t = 0;
-    for(int i=0; i<6 ; i++){
-      x[i] = 30;
-    }
-    for(int j=0; j<6 ; j++){
-      y[j] = 30;
-    }
-  }
-
-  </script>
-  <canvas class="canvas"></canvas>
-
-  <img class="image" src="image/a.jpg" alt="">  
-</div>
+				//  Processingのプログラム
 
 
-</body>
+				float [] x = {30,30,30,30,30,30};
+				float [] y = {30,30,30,30,30,30};
+				float [] dx ={5,7,10,13,16,20};
+				float dy = 10 ;
+				int sw = 0 ;//スイッチ 0で横動き停止,1で横うごく,2で落下
+				int t = 0;
+				PImage img_bun_top;
+				PImage img_lettuce;
+				PImage img_cheese;
+				PImage img_tomato;
+				PImage img_beef;
+				PImage img_bun_bottom;
+				PImage img_bg;
+				PImage img_reset;
+				PImage img_start;
+				PImage img_ending;
+				width = innerWidth;
+				height = innerHeight;
+
+				void setup(){
+				  size(width,height);
+				  smooth();
+				  frameRate(30);
+				  img_bun_top = loadImage("image/burger6.png");
+				  img_lettuce = loadImage("image/burger5.png");
+				  img_cheese = loadImage("image/burger4.png");
+				  img_tomato = loadImage("image/burger3.png");
+				  img_beef = loadImage("image/burger2.png");
+				  img_bun_bottom = loadImage("image/burger1.png");
+				  img_bg = loadImage("image/bg.png");
+				  img_reset = loadImage("image/reset.png");
+				  img_start = loadImage("image/start.png");
+				  img_ending = loadImage("image/ending.png");
+				}
+
+				void draw(){
+				  background(#143265);
+				  image(img_bg,width/2,height/3,width*1400/1920,width*640/1920);
+				  image(img_reset,40,40);
+				  stroke(5);
+				  fill(255,0,0);
+				  imageMode(CENTER);
+
+				  if(sw==0){
+				    image(img_start,width/2,height*2/3,width*1400/1920,width*280/1920);
+				  }
+
+				  if(sw==1){//バンズ下横移動
+				    image(img_bun_bottom,x[0],y[0]);
+				    x[0] += dx[0];
+				    if(width-35<x[0] || x[0]<35){
+				      dx[0] *= -1;
+				    }
+
+				  }
+
+				  else if(sw==2){//バンズ下落下
+				    image(img_bun_bottom,x[0],y[0]);
+				    if(y[0]<height-121){
+				      y[0] += 14;
+				    }
+				    if(height-121<=y[0]){
+				      sw = 3;
+				    }
+				  }
+
+				  else if(sw==3){//肉横移動
+				    image(img_bun_bottom,x[0],y[0]);
+				    image(img_beef,x[1],y[1]);
+				    x[1] += dx[1];
+				    if(width-35<x[1] || x[1]<35){
+				      dx[1] *= -1;
+				    }
+				  }
+
+				  else if(sw==4){//肉落下
+				    image(img_bun_bottom,x[0],y[0]);
+				    image(img_beef,x[1],y[1]);
+				    if(y[1] < y[0]-14){
+				      y[1] += 14;
+				    }
+				    if(y[0]-14 <= y[1]){
+				      y[1] = y[0]-11;
+				      sw = 5;
+				    }
+				  }
+
+				  else if(sw==5){//トマト横移動
+				    image(img_bun_bottom,x[0],y[0]);
+				    image(img_beef,x[1],y[1]);
+				    image(img_tomato,x[2],y[2]);
+				    x[2] += dx[2];
+				    if(width-35<x[2] || x[2]<35){
+				      dx[2] *= -1;
+				    }
+				  }
+
+				  else if(sw==6){//トマト落下
+				    image(img_bun_bottom,x[0],y[0]);
+				    image(img_beef,x[1],y[1]);
+				    image(img_tomato,x[2],y[2]);
+				    if(y[2]<y[1]-14){
+				      y[2] += 14;
+				    }
+				    if(y[1]-14<=y[2]){
+				      y[2] = y[1]-11;
+				      sw = 7;
+				    }
+				  }
+
+				  else if(sw==7){//チーズ横移動
+				    image(img_bun_bottom,x[0],y[0]);
+				    image(img_beef,x[1],y[1]);
+				    image(img_tomato,x[2],y[2]);
+				    image(img_cheese,x[3],y[3]);
+				    x[3] += dx[3];
+				    if(width-35<x[3] || x[3]<35){
+				      dx[3] *= -1;
+				    }
+				  }
+
+				  else if(sw==8){//チーズ落下
+				    image(img_bun_bottom,x[0],y[0]);
+				    image(img_beef,x[1],y[1]);
+				    image(img_tomato,x[2],y[2]);
+				    image(img_cheese,x[3],y[3]);
+				    if(y[3]<y[2]-14){
+				      y[3] += 14;
+				    }
+				    if(y[2]-14<=y[3]){
+				      y[3] = y[2]-6;
+				      sw = 9;
+				    }
+				  }
+
+				  else if(sw==9){//レタス横移動
+				    image(img_bun_bottom,x[0],y[0]);
+				    image(img_beef,x[1],y[1]);
+				    image(img_tomato,x[2],y[2]);
+				    image(img_cheese,x[3],y[3]);
+				    image(img_lettuce,x[4],y[4]);
+				    x[4] += dx[4];
+				    if(width-35<x[4] || x[4]<35){
+				      dx[4] *= -1;
+				    }
+				  }
+
+				  else if(sw==10){//レタス落下
+				    image(img_bun_bottom,x[0],y[0]);
+				    image(img_beef,x[1],y[1]);
+				    image(img_tomato,x[2],y[2]);
+				    image(img_cheese,x[3],y[3]);
+				    image(img_lettuce,x[4],y[4]);
+				    if(y[4]<y[3]-14){
+				      y[4] += 14;
+				    }
+				    if(y[3]-14<=y[4]){
+				      y[4] = y[3]-6;
+				      sw = 11;
+				    }
+				  }
+
+				  else if(sw==11){//バンズ上横移動
+				    image(img_bun_bottom,x[0],y[0]);
+				    image(img_beef,x[1],y[1]);
+				    image(img_tomato,x[2],y[2]);
+				    image(img_cheese,x[3],y[3]);
+				    image(img_lettuce,x[4],y[4]);
+				    image(img_bun_top,x[5],y[5]);
+				    x[5] += dx[5];
+				    if(width-35<x[5] || x[5]<35){
+				      dx[5] *= -1;
+				    }
+				  }
+
+				  else if(sw==12){//バンズ上落下
+				    image(img_bun_bottom,x[0],y[0]);
+				    image(img_beef,x[1],y[1]);
+				    image(img_tomato,x[2],y[2]);
+				    image(img_cheese,x[3],y[3]);
+				    image(img_lettuce,x[4],y[4]);
+				    image(img_bun_top,x[5],y[5]);
+				    if(y[5]<y[4]-14){
+				      y[5] += 14;
+				    }
+				    else if(y[4]-14<=y[5]){
+				      y[5] = y[4]-14;
+				      sw = 13;
+				    }
+				  }
+
+				  else if(sw==13){
+				    image(img_bun_bottom,x[0],y[0]);
+				    image(img_beef,x[1],y[1]);
+				    image(img_tomato,x[2],y[2]);
+				    image(img_cheese,x[3],y[3]);
+				    image(img_lettuce,x[4],y[4]);
+				    image(img_bun_top,x[5],y[5]);
+				    t++;
+				    if(30<=t){
+				      image(img_ending,width/2,height*2/3,width*1400/1920,width*240/1920);
+				    }
+				  }
+
+				}
+
+				void mousePressed(){
+				  if(sw==0){
+				    sw = 1;
+				  }
+				  else if(sw==1){
+				    sw = 2;
+				  }
+				  else if(sw==3){
+				    sw = 4;
+				  }
+				  else if(sw==5){
+				    sw = 6;
+				  }
+				  else if(sw==7){
+				    sw = 8;
+				  }
+				  else if(sw==9){
+				    sw = 10;
+				  }
+				  else if(sw==11){
+				    sw = 12;
+				  }
+
+				  if(mouseX<80 && mouseY<80){
+				    reset();
+				  }
+				}
+
+				/*
+				void keyPressed(){
+				  if(key == ' '){
+				    if(sw==0){
+				    sw = 1;
+				    }
+				    else if(sw==1){
+				      sw = 2;
+				    }
+				    else if(sw==3){
+				      sw = 4;
+				    }
+				    else if(sw==5){
+				      sw = 6;
+				    }
+				    else if(sw==7){
+				      sw = 8;
+				    }
+				    else if(sw==9){
+				      sw = 10;
+				    }
+				    else if(sw==11){
+				      sw = 12;
+				    }
+				  }
+				  else if(key == 'r'){
+				    reset();
+				  }
+				}
+				*/
+
+				void reset(){
+				  sw = 0;
+				  t = 0;
+				  for(int i=0; i<6 ; i++){
+				    x[i] = 30;
+				  }
+				  for(int j=0; j<6 ; j++){
+				    y[j] = 30;
+				  }
+				}
+			</script>
+			<canvas class="canvas"></canvas>
+		</div>
+		<script src="js/processing.min.js"></script>
+		<script src="js/nomnom.js"></script>
+	</body>
 </html>
